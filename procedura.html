@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procedura - Piattaforma UE</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Barra di Progresso Fissa -->
+    <div class="progress-container" id="progressBar">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Livello: 0%</div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>📋 Procedura Semplificata</h1>
+            <p id="selectedCountry">Stato: Caricamento...</p>
+        </div>
+    </header>
+
+    <!-- Contenuto Principale -->
+    <main class="container">
+        <div class="procedure-container">
+            <!-- Indicatore Step -->
+            <div class="step-indicator" id="stepIndicator">
+                <div class="step-indicator-item active" data-step="0">
+                    <div class="step-dot">1</div>
+                    <div class="step-label">Informazioni Base</div>
+                </div>
+                <div class="step-indicator-item" data-step="1">
+                    <div class="step-dot">2</div>
+                    <div class="step-label">Documenti</div>
+                </div>
+                <div class="step-indicator-item" data-step="2">
+                    <div class="step-dot">3</div>
+                    <div class="step-label">Dettagli Personali</div>
+                </div>
+                <div class="step-indicator-item" data-step="3">
+                    <div class="step-dot">4</div>
+                    <div class="step-label">Indirizzo</div>
+                </div>
+                <div class="step-indicator-item" data-step="4">
+                    <div class="step-dot">5</div>
+                    <div class="step-label">Verifica</div>
+                </div>
+                <div class="step-indicator-item" data-step="5">
+                    <div class="step-dot">6</div>
+                    <div class="step-label">Conferma</div>
+                </div>
+            </div>
+
+            <!-- Container Step -->
+            <div class="step-container">
+                <!-- Step 1: Informazioni Base -->
+                <div class="step active" id="step0">
+                    <h2>Step 1: Informazioni di Base</h2>
+                    <p>Iniziamo con le informazioni fondamentali per la tua richiesta.</p>
+
+                    <div class="form-group">
+                        <label for="requestType">Tipo di Richiesta *</label>
+                        <select id="requestType" required>
+                            <option value="">Seleziona...</option>
+                            <option value="visa">Visto</option>
+                            <option value="residence">Permesso di Soggiorno</option>
+                            <option value="work">Permesso di Lavoro</option>
+                            <option value="study">Visto di Studio</option>
+                            <option value="business">Visto Business</option>
+                            <option value="family">Ricongiungimento Familiare</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="duration">Durata Prevista *</label>
+                        <select id="duration" required>
+                            <option value="">Seleziona...</option>
+                            <option value="short">Breve termine (fino a 90 giorni)</option>
+                            <option value="medium">Medio termine (90 giorni - 1 anno)</option>
+                            <option value="long">Lungo termine (oltre 1 anno)</option>
+                            <option value="permanent">Permanente</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purpose">Scopo della Richiesta *</label>
+                        <textarea id="purpose" required placeholder="Descrivi brevemente lo scopo della tua richiesta..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 2: Documenti -->
+                <div class="step" id="step1">
+                    <h2>Step 2: Documenti Necessari</h2>
+                    <p>Carica i documenti richiesti per la tua procedura.</p>
+
+                    <div class="form-group">
+                        <label for="passport">Numero Passaporto *</label>
+                        <input type="text" id="passport" required placeholder="ES: AB1234567">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passportExpiry">Data Scadenza Passaporto *</label>
+                        <input type="date" id="passportExpiry" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationality">Nazionalità *</label>
+                        <input type="text" id="nationality" required placeholder="ES: Italiana">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="documentNotes">Note sui Documenti</label>
+                        <textarea id="documentNotes" placeholder="Eventuali note aggiuntive sui documenti..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 3: Dettagli Personali -->
+                <div class="step" id="step2">
+                    <h2>Step 3: Dettagli Personali</h2>
+                    <p>Fornisci i tuoi dati personali.</p>
+
+                    <div class="form-group">
+                        <label for="firstName">Nome *</label>
+                        <input type="text" id="firstName" required placeholder="Mario">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Cognome *</label>
+                        <input type="text" id="lastName" required placeholder="Rossi">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthDate">Data di Nascita *</label>
+                        <input type="date" id="birthDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthPlace">Luogo di Nascita *</label>
+                        <input type="text" id="birthPlace" required placeholder="Roma, Italia">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Sesso *</label>
+                        <select id="gender" required>
+                            <option value="">Seleziona...</option>
+                            <option value="M">Maschile</option>
+                            <option value="F">Femminile</option>
+                            <option value="O">Altro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Step 4: Indirizzo -->
+                <div class="step" id="step3">
+                    <h2>Step 4: Indirizzo e Contatti</h2>
+                    <p>Dove possiamo contattarti?</p>
+
+                    <div class="form-group">
+                        <label for="address">Indirizzo *</label>
+                        <input type="text" id="address" required placeholder="Via Roma, 123">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">Città *</label>
+                        <input type="text" id="city" required placeholder="Milano">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postalCode">CAP *</label>
+                        <input type="text" id="postalCode" required placeholder="20100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country">Paese *</label>
+                        <input type="text" id="country" required placeholder="Italia">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" required placeholder="mario.rossi@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Telefono *</label>
+                        <input type="tel" id="phone" required placeholder="+39 123 456 7890">
+                    </div>
+                </div>
+
+                <!-- Step 5: Verifica -->
+                <div class="step" id="step4">
+                    <h2>Step 5: Verifica Dati</h2>
+                    <p>Controlla attentamente tutti i dati inseriti prima di procedere.</p>
+
+                    <div id="summaryContent" style="background: #f8f9fa; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                        <!-- Il contenuto verrà inserito dinamicamente -->
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="termsAccept" required>
+                            Accetto i termini e le condizioni della procedura *
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="dataAccept" required>
+                            Confermo che tutti i dati inseriti sono corretti *
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Step 6: Conferma -->
+                <div class="step" id="step5">
+                    <div class="success-message">
+                        <div class="success-icon">✅</div>
+                        <h2>Procedura Completata!</h2>
+                        <p>La tua richiesta è stata registrata con successo nella blockchain.</p>
+
+                        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 12px; margin: 30px 0;">
+                            <h3>Dettagli Transazione Blockchain</h3>
+                            <div style="margin: 15px 0;">
+                                <strong>Hash Transazione:</strong><br>
+                                <code id="txHash" style="background: rgba(0,0,0,0.3); padding: 10px; display: block; margin-top: 5px; border-radius: 6px; word-break: break-all;"></code>
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <strong>Blocco:</strong>
+                                <code id="blockNum" style="background: rgba(0,0,0,0.3); padding: 10px; display: inline-block; margin-left: 10px; border-radius: 6px;"></code>
+                            </div>
+                            <div style="margin: 15px 0;">
+                                <strong>Timestamp:</strong>
+                                <code id="txTimestamp" style="background: rgba(0,0,0,0.3); padding: 10px; display: inline-block; margin-left: 10px; border-radius: 6px;"></code>
+                            </div>
+                        </div>
+
+                        <p style="margin-top: 30px;">Riceverai una email di conferma all'indirizzo fornito.</p>
+                        <button class="btn-primary" onclick="window.location.href='index.html'" style="margin-top: 20px; padding: 15px 40px; font-size: 1.1rem;">
+                            Torna alla Home
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pulsanti Navigazione -->
+                <div class="navigation-buttons">
+                    <button class="btn-nav btn-prev" id="prevBtn" onclick="changeStep(-1)">
+                        ← Indietro
+                    </button>
+                    <button class="btn-nav btn-next" id="nextBtn" onclick="changeStep(1)">
+                        Avanti →
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sezione Blockchain Info -->
+            <div class="blockchain-section" style="margin-top: 30px;">
+                <h2>⛓️ Stato Blockchain</h2>
+                <div class="blockchain-container">
+                    <div class="blockchain-stats">
+                        <div class="blockchain-item">
+                            <strong>Hash Blocco Corrente:</strong>
+                            <code id="currentBlockHash">-</code>
+                        </div>
+                        <div class="blockchain-item">
+                            <strong>Numero Blocco:</strong>
+                            <code id="currentBlockNumber">-</code>
+                        </div>
+                        <div class="blockchain-item">
+                            <strong>Ultimo Aggiornamento:</strong>
+                            <code id="lastUpdate">-</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Piattaforma Procedure UE. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script src="procedura.js"></script>
+</body>
+</html>

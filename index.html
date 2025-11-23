@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mappa Interattiva Stati UE - Piattaforma Procedure</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Barra di Progresso Fissa -->
+    <div class="progress-container" id="progressBar">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Livello: 0%</div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>🇪🇺 Piattaforma Procedure UE</h1>
+            <p>Mappa Interattiva degli Stati Membri dell'Unione Europea</p>
+        </div>
+    </header>
+
+    <!-- Contenuto Principale -->
+    <main class="container">
+        <section class="intro-section">
+            <h2>Benvenuto nella Piattaforma</h2>
+            <p>Clicca su uno stato della mappa per iniziare le procedure semplificate. Il sistema ti guiderà passo dopo passo attraverso tutti i moduli necessari.</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">27</div>
+                    <div class="stat-label">Stati UE</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalSteps">6</div>
+                    <div class="stat-label">Moduli Totali</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completedSteps">0</div>
+                    <div class="stat-label">Completati</div>
+                </div>
+                <div class="stat-card blockchain-stat">
+                    <div class="stat-icon">⛓️</div>
+                    <div class="stat-label">Blockchain Attivo</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mappa Interattiva UE -->
+        <section class="map-section">
+            <h2>Seleziona uno Stato</h2>
+            <div class="map-container">
+                <svg id="euMap" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Definizione stili SVG -->
+                    <defs>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <!-- Stati UE (semplificati per rappresentazione) -->
+                    <g id="countries">
+                        <!-- Portogallo -->
+                        <path id="PT" class="country" d="M 150,450 L 120,460 L 115,490 L 125,520 L 145,510 L 155,480 Z" data-name="Portogallo"/>
+
+                        <!-- Spagna -->
+                        <path id="ES" class="country" d="M 155,480 L 145,510 L 160,540 L 200,560 L 250,550 L 290,530 L 310,500 L 300,470 L 270,460 L 220,465 L 180,475 Z" data-name="Spagna"/>
+
+                        <!-- Francia -->
+                        <path id="FR" class="country" d="M 270,460 L 300,470 L 320,445 L 360,430 L 380,400 L 365,370 L 340,360 L 310,365 L 280,380 L 260,410 Z" data-name="Francia"/>
+
+                        <!-- Italia -->
+                        <path id="IT" class="country" d="M 450,480 L 440,520 L 450,570 L 470,610 L 480,640 L 490,610 L 500,570 L 505,530 L 495,490 L 475,475 Z" data-name="Italia"/>
+
+                        <!-- Germania -->
+                        <path id="DE" class="country" d="M 480,320 L 500,310 L 540,315 L 560,330 L 570,360 L 560,390 L 540,410 L 510,415 L 480,405 L 470,380 L 475,340 Z" data-name="Germania"/>
+
+                        <!-- Polonia -->
+                        <path id="PL" class="country" d="M 580,280 L 620,275 L 660,285 L 680,310 L 670,345 L 650,370 L 620,375 L 590,365 L 575,340 L 580,305 Z" data-name="Polonia"/>
+
+                        <!-- Paesi Bassi -->
+                        <path id="NL" class="country" d="M 420,300 L 445,295 L 460,310 L 455,330 L 435,335 L 415,325 Z" data-name="Paesi Bassi"/>
+
+                        <!-- Belgio -->
+                        <path id="BE" class="country" d="M 415,325 L 435,335 L 440,350 L 425,360 L 405,355 L 400,340 Z" data-name="Belgio"/>
+
+                        <!-- Lussemburgo -->
+                        <path id="LU" class="country" d="M 425,360 L 435,365 L 432,375 L 423,372 Z" data-name="Lussemburgo"/>
+
+                        <!-- Austria -->
+                        <path id="AT" class="country" d="M 540,410 L 570,405 L 600,415 L 610,430 L 595,445 L 565,450 L 540,440 Z" data-name="Austria"/>
+
+                        <!-- Repubblica Ceca -->
+                        <path id="CZ" class="country" d="M 560,360 L 590,355 L 610,365 L 605,385 L 585,395 L 560,390 Z" data-name="Rep. Ceca"/>
+
+                        <!-- Slovacchia -->
+                        <path id="SK" class="country" d="M 610,365 L 645,360 L 665,375 L 655,395 L 630,400 L 610,390 Z" data-name="Slovacchia"/>
+
+                        <!-- Ungheria -->
+                        <path id="HU" class="country" d="M 610,400 L 640,395 L 670,405 L 675,425 L 655,440 L 625,445 L 605,430 Z" data-name="Ungheria"/>
+
+                        <!-- Slovenia -->
+                        <path id="SI" class="country" d="M 540,440 L 560,435 L 570,450 L 560,465 L 540,460 Z" data-name="Slovenia"/>
+
+                        <!-- Croazia -->
+                        <path id="HR" class="country" d="M 560,465 L 580,460 L 605,470 L 610,490 L 590,505 L 565,500 L 555,485 Z" data-name="Croazia"/>
+
+                        <!-- Romania -->
+                        <path id="RO" class="country" d="M 690,400 L 730,395 L 760,410 L 765,440 L 750,470 L 720,480 L 685,470 L 670,440 Z" data-name="Romania"/>
+
+                        <!-- Bulgaria -->
+                        <path id="BG" class="country" d="M 720,480 L 750,475 L 780,485 L 785,510 L 765,530 L 735,535 L 710,520 Z" data-name="Bulgaria"/>
+
+                        <!-- Grecia -->
+                        <path id="GR" class="country" d="M 710,540 L 730,535 L 750,550 L 760,580 L 740,610 L 715,615 L 690,600 L 685,570 Z" data-name="Grecia"/>
+
+                        <!-- Svezia -->
+                        <path id="SE" class="country" d="M 580,120 L 610,110 L 640,125 L 655,160 L 650,200 L 630,235 L 605,245 L 580,230 L 570,190 L 575,150 Z" data-name="Svezia"/>
+
+                        <!-- Finlandia -->
+                        <path id="FI" class="country" d="M 650,80 L 680,70 L 720,85 L 745,120 L 740,160 L 715,185 L 685,190 L 660,175 L 650,140 Z" data-name="Finlandia"/>
+
+                        <!-- Danimarca -->
+                        <path id="DK" class="country" d="M 480,250 L 505,245 L 520,260 L 515,280 L 495,285 L 475,275 Z" data-name="Danimarca"/>
+
+                        <!-- Estonia -->
+                        <path id="EE" class="country" d="M 740,190 L 770,185 L 790,200 L 785,220 L 760,225 L 740,210 Z" data-name="Estonia"/>
+
+                        <!-- Lettonia -->
+                        <path id="LV" class="country" d="M 740,225 L 770,220 L 790,235 L 785,255 L 760,265 L 735,255 Z" data-name="Lettonia"/>
+
+                        <!-- Lituania -->
+                        <path id="LT" class="country" d="M 680,260 L 710,255 L 735,265 L 730,285 L 705,295 L 680,285 Z" data-name="Lituania"/>
+
+                        <!-- Irlanda -->
+                        <path id="IE" class="country" d="M 220,280 L 245,275 L 260,295 L 255,320 L 235,330 L 215,320 L 210,300 Z" data-name="Irlanda"/>
+
+                        <!-- Malta -->
+                        <circle id="MT" class="country" cx="480" cy="680" r="8" data-name="Malta"/>
+
+                        <!-- Cipro -->
+                        <circle id="CY" class="country" cx="850" cy="600" r="10" data-name="Cipro"/>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- Info Stato Selezionato -->
+            <div class="country-info" id="countryInfo" style="display: none;">
+                <h3 id="countryName"></h3>
+                <p id="countryDescription"></p>
+                <button class="btn-primary" id="startProcedure">Inizia Procedura</button>
+            </div>
+        </section>
+
+        <!-- Sezione Blockchain -->
+        <section class="blockchain-section">
+            <h2>⛓️ Registro Blockchain</h2>
+            <div class="blockchain-container">
+                <div class="blockchain-info">
+                    <p>Tutte le procedure sono registrate su blockchain per garantire trasparenza e immutabilità.</p>
+                    <div class="blockchain-stats">
+                        <div class="blockchain-item">
+                            <strong>Hash Corrente:</strong>
+                            <code id="currentHash">0x0000000000000000000000000000000000000000</code>
+                        </div>
+                        <div class="blockchain-item">
+                            <strong>Blocco:</strong>
+                            <code id="blockNumber">#0</code>
+                        </div>
+                        <div class="blockchain-item">
+                            <strong>Timestamp:</strong>
+                            <code id="timestamp">-</code>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-secondary" id="verifyBlockchain">Verifica Integrità</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Piattaforma Procedure UE. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
